@@ -25,16 +25,12 @@ def solution(k, m, score):
     e = []
     
     for i in score:
-
         e.append(i)
-
         if len(e) == m:
             answer += e.pop(-1) * m
             e.clear()
-
         if len(score) == 0:
             break
-    
     return answer
 
 print(solution(4, 3, [4, 1, 2, 2, 4, 4, 4, 4, 1, 2, 4, 2]))
