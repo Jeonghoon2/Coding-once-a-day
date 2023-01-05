@@ -11,7 +11,6 @@ def solution(food):
     
     dic = {}
     first = []
-    second = []
     middle = '0'
 
     for i in range(1,len(food)):
@@ -32,10 +31,6 @@ def solution(food):
     first_str = makeToFood(first)
     first.reverse()
     second_str = makeToFood(first)
-    
-    
-
-    
 
     return first_str+'0'+second_str
 
