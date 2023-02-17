@@ -9,4 +9,3 @@ class Solution:
             else:
                 answer +=Symbol_dict[s[i]]
         return answer + Symbol_dict[s[-1]]
-
