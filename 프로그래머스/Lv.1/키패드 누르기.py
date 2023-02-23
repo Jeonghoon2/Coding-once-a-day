@@ -1,44 +1,47 @@
-from turtle import right
-
-
 def solution(numbers, hand):
     answer = ''
-    print(numbers)
-    left_key = [1,4,7]
-    right_key = [3,6,9]
-    ju_hand = ''
-    
-    if hand == 'right':
-        ju_hand = 'R'
-    else: ju_hand = 'L'
-    for i in range(len(numbers)):
-        #
+    dic = {1: [0, 0], 2: [0, 1], 3: [0, 2],
+           4: [1, 0], 5: [1, 1], 6: [1, 2],
+           7: [2, 0], 8: [2, 1], 9: [2, 2],
+           '*': [3, 0], 0: [3, 1], '#': [3, 2]}
 
-        # left_key에 있는지 검사
-        if numbers[i] in left_key:
+    # 시작 위치
+    left_s = dic['*']
+    right_s = dic['#']
+
+    for i in numbers:
+        now = dic[i]
+
+        if i in [1, 4, 7]:
             answer += 'L'
-            continue
-        # rigtht_key에 있는지 검사
-        if numbers[i] in right_key:
+            left_s = now
+
+        elif i in [3, 6, 9]:
             answer += 'R'
-            continue
-        
-
-        # 최초로 눌렀을 경우
-        if i == 0:
-            answer += ju_hand
-
-        #  둘다 없다면 현재값 -1 +1을 해서 이전에 누른값과 비교해서 있다면 최신에 누른 값을 적는다.
-        if numbers[i]-1 == numbers[i-1]:
-            answer+='L'
-        elif numbers[i]+1 == numbers[i-1]:
-            answer +='R'
+            right_s = now
         else:
-            answer += ju_hand
-        
+            left_d = 0
+            right_d = 0
 
-        # 위 조건이 일치 하지 않을 경우 주손을 적는다.
-        
+            for a, b, c in zip(left_s, right_s, now):
+                left_d += abs(a - c)
+                right_d += abs(b - c)
+
+            if left_d < right_d:
+                answer += 'L'
+                left_s = now
+            elif left_d > right_d:
+                answer += 'R'
+                right_s = now
+            else:
+                if hand == 'left':
+                    answer += 'L'
+                    left_s = now
+                else:
+                    answer += 'R'
+                    right_s = now
+
     return answer
 
-print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5],"right"))
+
+print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
