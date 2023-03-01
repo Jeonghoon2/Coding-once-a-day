@@ -1,6 +1,6 @@
 # v 가 Key 일 때 i+1 이 value 값이면 True
 
-# 틀린닶 
+# 틀린 답
 # s={[]} 일때 만족하지 못함
 class Solution:
     def isValid(s: str) -> bool:
