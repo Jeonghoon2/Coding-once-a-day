@@ -24,6 +24,7 @@ class Solution:
                     connect[next_p].add(p)
 
 
+
         def bfs(i):
             visit = [False] * n
             d.append(i)
