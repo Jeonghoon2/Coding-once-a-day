@@ -21,6 +21,7 @@ def solution(wallpaper):
 
     return [lx, ly, rx + 1, ry + 1]
 
+
 # 다른 풀이
 def solution2(wallpaper):
     x = []
