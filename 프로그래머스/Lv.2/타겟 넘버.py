@@ -9,4 +9,27 @@ def solution(numbers, target):
     return sup.count(target)
 
 
-print(solution([1, 1, 1, 1, 1], 3))
+# BFS
+from collections import deque
+
+def solution2(numbers, target):
+    answer = 0
+
+    d = deque()
+    d.append((numbers[0], 0))
+    d.append((-1 * numbers[0], 0))
+
+    while d:
+        x, index = d.popleft()
+        index += 1
+        if index < len(numbers):
+            d.append((x + numbers[index], index))
+            d.append((x - numbers[index], index))
+        else:
+            if x == target:
+                answer += 1
+
+    return answer
+
+
+print(solution2([1, 1, 1, 1, 1], 3))
