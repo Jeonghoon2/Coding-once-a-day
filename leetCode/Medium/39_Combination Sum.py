@@ -26,7 +26,7 @@ class Solution:
             for i in range(len(candidates)):
                 dfs(n_sum + candidates[i], nums + [candidates[i]])
 
-        dfs(0, [])¥
+        dfs(0, [])
         return answer
 
 candidates = [2,3,6,7]
