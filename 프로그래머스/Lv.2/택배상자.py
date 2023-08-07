@@ -2,22 +2,20 @@
 
 
 def solution(order):
-    answer = 0
-
-    sub_container = []
+    assist = []
     i = 1
-
+    cnt = 0
     while i != len(order) + 1:
-        sub_container.append(i)
-        while sub_container and sub_container[-1] == order[answer]:
-            answer += 1
-            sub_container.pop()
-        i += 1
+        assist.append(i)
+        while assist and assist[-1] == order[cnt]:
+            cnt += 1
+            assist.pop()
 
-    return answer
+        i += 1
+    return cnt
 
 
 order = [4, 3, 1, 2, 5]
 order2 = [5, 4, 3, 2, 1]
 
-print(solution(order2))
+print(solution(order))
