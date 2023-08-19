@@ -1,5 +1,6 @@
 package 프로그래머스.lv2.올바른_괄호;
 
+import javax.xml.stream.FactoryConfigurationError;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -74,13 +75,32 @@ public class Solution {
 
     }
 
+    /* 효율성 태스트 실패 */
+    public static boolean solution3(String s){
+        boolean answer = true;
+
+        Stack<String> st = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++){
+            if (s.charAt(i) == '('){
+                st.push("(");
+            }else if (s.charAt(i) == ')'){
+                if (st.isEmpty()){
+                    return false;
+                }
+                st.pop();
+            }
+        }
+        return st.isEmpty();
+    }
+
 
 
     public static void main(String[] args) {
 
         String s = "(()(";
 
-        System.out.println(solution2(s));
+        System.out.println(solution3(s));
 
     }
 }
