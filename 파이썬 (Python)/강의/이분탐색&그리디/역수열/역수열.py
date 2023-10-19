@@ -26,11 +26,6 @@ def solution():
     return ans
 
 
-ans = solution()
+print(solution())
 
-sys.stdin = open('out2.txt', 'r')
 
-out = input()
-
-if ans == out:
-    print('correct')
