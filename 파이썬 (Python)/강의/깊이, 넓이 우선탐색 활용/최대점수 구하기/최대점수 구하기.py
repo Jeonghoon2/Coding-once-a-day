@@ -4,12 +4,12 @@ sys.stdin = open("in5.txt", 'r')
 
 
 def dfs(l, t, s):
-    global ans
+    global rst
 
     if t > m:
         return
     if l == n:
-        ans = max(ans, s)
+        ans = max(rst, s)
         return
     else:
         dfs(l + 1, t + pt[l], s + pv[l])
@@ -27,8 +27,8 @@ if __name__ == "__main__":
         pv.append(v)
         pt.append(t)
 
-    ans = 0
+    rst = 0
 
     dfs(0, 0, 0)
 
-    print(ans)
+    print(rst)
