@@ -1,9 +1,8 @@
 def dfs(x, y):
-
     if dp[x][y] != -1:
         return dp[x][y]
 
-    if x == m-1 and y == n-1:
+    if x == m - 1 and y == n - 1:
         return 1
 
     dp[x][y] = 0
@@ -15,6 +14,7 @@ def dfs(x, y):
             dp[x][y] += dfs(nx, ny)
 
     return dp[x][y]
+
 
 m, n = map(int, input().split())
 graph = [list(map(int, input().split())) for _ in range(m)]

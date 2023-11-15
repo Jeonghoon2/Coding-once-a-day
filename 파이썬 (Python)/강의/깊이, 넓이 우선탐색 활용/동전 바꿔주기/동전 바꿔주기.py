@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open('in5.txt', 'r')
+sys.stdin = open('in3.txt', 'r')
 
 
 def dfs(l, s):
@@ -24,7 +24,6 @@ if __name__ == '__main__':
     p = []
     for _ in range(k):
         p.append(list(map(int, input().split())))
-    p.sort(key=lambda x: x[1])
     rst = 0
 
     dfs(0, 0)
