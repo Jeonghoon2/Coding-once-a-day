@@ -1,64 +1,61 @@
-# 세로 N, 가로 M, 0 빈칸, 1 벽, 2 바이러스
-# 먼저 임의의 벽을 새운다.
-# 새운 벽을 토대로 BFS를 돌린다.
+# 1. 벽을 만든다.
+# 2. 벽 3개가 만들어 지면 안전 영역을 검사
+# 계산식 : (n*m) - (벽 개수 + 3 + virus 퍼진 수)
 import copy
 from collections import deque
 
-N, M = map(int, input().split())
-factory = [list(map(int, input().split())) for _ in range(N)]
-answer = 0
+n, m = map(int, input().split())
 
-move = [[1, 0],
-        [-1, 0],
-        [0, 1],
-        [0, -1]
-        ]
+ft = [list(map(int, input().split())) for _ in range(n)]
 
+dr = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+rst = 0
 
-# BFS
+cw = 0
+# 벽 개수 구하기
+for i in range(n):
+    for j in range(m):
+        if ft[i][j] == 1:
+            cw += 1
+
 def bfs():
-    q = deque()
-    cp_f = copy.deepcopy(factory)
+    global rst
+    d = deque()
+    sub_ft = copy.deepcopy(ft)
 
-    for i in range(N):
-        for j in range(M):
-            if cp_f[i][j] == 2:
-                q.append((i, j))
+    virus = 0
+    for i in range(n):
+        for j in range(m):
+            if sub_ft[i][j] == 2:
+                d.append((i, j))
+                virus += 1
 
-    while q:
-        cx, cy = q.popleft()
+    while d:
+        cx, cy = d.popleft()
+        for mx, my in dr:
+            nx, ny = cx + mx, cy + my
 
-        for mx, my in move:
-            nx = cx + mx
-            ny = cy + my
+            if 0 <= nx < n and 0 <= ny < m:
+                if sub_ft[nx][ny] == 0:
+                    sub_ft[nx][ny] = 2
+                    virus += 1
+                    d.append((nx, ny))
 
-            if 0 <= nx < N and 0 <= ny < M:
-                if cp_f[nx][ny] == 0:
-                    cp_f[nx][ny] = 2
-                    q.append((nx, ny))
-
-    global answer
-    cnt = 0
-    for i in range(N):
-        cnt += cp_f[i].count(0)
-
-    answer = max(answer, cnt)
+    rst = max(rst, int((n * m) - (cw + 3 + virus)))
 
 
-# 참고
-def wall(cnt):
-    if cnt == 3:
+def wall(c):
+    if c == 3:
         bfs()
         return
-
-    for i in range(N):
-        for j in range(M):
-            if factory[i][j] == 0:
-                factory[i][j] = 1
-                wall(cnt + 1)
-                factory[i][j] = 0
+    else:
+        for i in range(n):
+            for j in range(m):
+                if ft[i][j] == 0:
+                    ft[i][j] = 1
+                    wall(c + 1)
+                    ft[i][j] = 0
 
 
 wall(0)
-
-print(answer)
+print(rst)
