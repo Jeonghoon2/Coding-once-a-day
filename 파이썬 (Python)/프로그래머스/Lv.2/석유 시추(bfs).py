@@ -16,6 +16,7 @@ def solution(land):
         while d:
             x, y = d.popleft()
             cnt += 1
+
             min_y, max_y = min(y, min_y), max(y, max_y)
             for mx, my in dr:
                 nx, ny = x + mx, y + my
