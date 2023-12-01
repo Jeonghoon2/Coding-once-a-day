@@ -1,15 +1,16 @@
-# "점수|보너스|[옵션]"으로 이루어진 문자열 3세트.
-# S,D,T 
+import re
 
 def solution(dartResult):
-    point_li = []
-    dartResult = list(dartResult)
-    for i in range(len(dartResult)):
-        if dartResult[i] == '*' or dartResult[i] =='#':
-            
-        point_li.append(i)
-        
     answer = 0
-    return answer
+    point = {'S': 1, 'D': 2, 'T': 3}
+    option = {'': 1, '*': 2, '#': -1}
 
-print(solution("1S2D*3T"))
+    p = re.compile('(\d+)([SDT])([*#]?)')
+    dart = p.findall(dartResult)
+    for i in range(len(dart)):
+        if dart[i][2] == '*' and i > 0:
+            dart[i - 1] *= 2
+        dart[i] = int(dart[i][0]) ** point[dart[i][1]] * option[dart[i][2]]
+
+    answer = sum(dart)
+    return answer
