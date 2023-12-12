@@ -2,60 +2,43 @@
 # M = 가로, N = 세로
 
 from collections import deque
+import sys
 
-N, M = map(int, input().split())
-basket = []
-start_position = []
-answer = int(1e9)
-for _ in range(M):
-    basket.append(list(map(int, input().split(' '))))
+m, n = map(int, input().split())
+
+tomatoes = [list(map(int, input().split())) for _ in range(n)]
+
+d = deque()
+
+dr = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+
+rst = 0
+
+# 기존 토마토
+for i in range(n):
+    for j in range(m):
+        if tomatoes[i][j] == 1:
+            d.append([i, j])
 
 
-# BFS
-def bfs(start_position, b):
-
-    # move
-    move = [
-        [1, 0],
-        [-1, 0],
-        [0, 1],
-        [0, -1]
-    ]
-    d = deque()
-    for start_x,start_y in start_position:
-        d.append((start_x, start_y, 0))
-
-    cnt = 0
-
+def bfs():
     while d:
-        cur_x, cur_y, cur_cnt = d.popleft()
+        cur_x, cur_y = d.popleft()
 
-        if cnt < cur_cnt:
-            cnt = cur_cnt
+        for mx, my in dr:
+            nx, ny = cur_x + mx, cur_y + my
 
-        for mx, my in move:
-            nx = cur_x + mx
-            ny = cur_y + my
-            if 0 <= nx < len(b) and 0 <= ny < len(b[0]):
-                if b[nx][ny] == 0:
-                    if b[nx][ny] != -1 and b[nx][ny] != 1:
-                        d.append((nx, ny, cur_cnt + 1))
-                        b[nx][ny] = 1
-
-    for i in range(len(b)):
-        for j in range(len(b[0])):
-            if b[i][j] == 0:
-                return -1
-
-    return cnt
+            if 0 <= nx < n and 0 <= ny < m and tomatoes[nx][ny] == 0:
+                tomatoes[nx][ny] = tomatoes[cur_x][cur_y] + 1
+                d.append([nx, ny])
 
 
-# 시작 지점 찾기
-for i in range(len(basket)):
-    for j in range(len(basket[0])):
-        if basket[i][j] == 1:
-            start_position.append([i, j])
+bfs()
+for i in tomatoes:
+    for j in i:
+        if j == 0:
+            print(-1)
+            sys.exit(0)
+    rst = max(rst, max(i))
 
-answer = bfs(start_position,basket)
-
-print(answer)
+print(rst-1)
