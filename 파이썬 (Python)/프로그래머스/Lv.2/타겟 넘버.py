@@ -12,6 +12,7 @@ def solution(numbers, target):
 # BFS
 from collections import deque
 
+
 def solution2(numbers, target):
     answer = 0
 
@@ -32,4 +33,28 @@ def solution2(numbers, target):
     return answer
 
 
-print(solution2([1, 1, 1, 1, 1], 3))
+def solution3(numbers, target):
+    answer = 0
+
+    def dfs(idx, cur_num):
+        nonlocal answer
+        if idx == len(numbers) - 1:
+            for i in [1, -1]:
+                num = numbers[idx]
+                total = cur_num + num * i
+
+                if total == target:
+                    answer += 1
+            return
+        else:
+            num = numbers[idx]
+            for i in [1, -1]:
+                dfs(idx + 1, cur_num + num * i)
+
+    dfs(0, 0)
+
+    return answer
+
+
+
+print(solution3([4, 1, 2, 1], 2))
